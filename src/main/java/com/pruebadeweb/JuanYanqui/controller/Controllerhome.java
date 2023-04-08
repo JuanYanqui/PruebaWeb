@@ -59,7 +59,7 @@ public class Controllerhome {
 
     @GetMapping({"/index/git"})
     public String git(Model model){
-        return "redirect:";
+        return "redirect:https://github.com/JuanYanqui";
     }
 
 //    @GetMapping("/")
@@ -149,15 +149,25 @@ public class Controllerhome {
         }
         return "redirect:/index/menu";
     }
-    @GetMapping("/index/edit")
-    public String menuds( ModelMap model){
-        Menu menu = new Menu();
-        model.addAttribute("menus", menu);
-        return "menuvalida";
+    @GetMapping("/index/validacliente")
+    public String validacliente( @Validated Cliente cliente, BindingResult result, Model model){
+        model.addAttribute("clientes", cliente);
+        model.addAttribute("title", "Result form");
+        if(result.hasErrors()){
+            Map<String, String> e = new HashMap<>();
+            result.getFieldErrors().forEach(er ->{
+                e.put(er.getField(),
+                        "El campo ".concat(er.getField()).concat(" ").concat(er.getDefaultMessage()));
+            });
+            model.addAttribute("error", e);
+            return "clientevalida";
+        }
+        return "/index/cliente";
     }
-    @PostMapping("/m")
-    public String saveMenu(@Validated Menu menus, BindingResult result, Model model){
 
+    @GetMapping("/index/validamenu")
+    public String validacliente( @Validated Menu menu, BindingResult result, Model model){
+        model.addAttribute("menus", menu);
         model.addAttribute("title", "Result form");
         if(result.hasErrors()){
             Map<String, String> e = new HashMap<>();
@@ -168,11 +178,33 @@ public class Controllerhome {
             model.addAttribute("error", e);
             return "menuvalida";
         }
-        //menuService.save(menu);
-
-        return "redirect:/index/menu";
-        //return "redirect:/app/index/menus";
+        return "/index/menu";
     }
+//    @GetMapping("/index/edit")
+//    public String menuds( ModelMap model){
+//        Menu menu = new Menu();
+//        model.addAttribute("menus", menu);
+//        return "menuvalida";
+//    }
+
+//    @PostMapping("/m")
+//    public String saveMenu(@Validated Menu menus, BindingResult result, Model model){
+//
+//        model.addAttribute("title", "Result form");
+//        if(result.hasErrors()){
+//            Map<String, String> e = new HashMap<>();
+//            result.getFieldErrors().forEach(er ->{
+//                e.put(er.getField(),
+//                        "El campo ".concat(er.getField()).concat(" ").concat(er.getDefaultMessage()));
+//            });
+//            model.addAttribute("error", e);
+//            return "menuvalida";
+//        }
+//        //menuService.save(menu);
+//
+//        return "redirect:/index/menu";
+//        //return "redirect:/app/index/menus";
+//    }
 
     @GetMapping("/index/cliente/{id}")
     public String clienteEdit(@PathVariable Long id, ModelMap model){

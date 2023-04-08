@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <html lang="es">
 <head>
   <meta charset="UTF-8">
@@ -24,9 +23,6 @@
         <a class="nav-link" href="#" th:href="@{/index/cliente}" >Clientes</a>
       </li>
       <li class="nav-item active">
-        <a class="nav-link" href="#" th:href="@{/index/ver/string/{texto}}" >ver</a>
-      </li>
-      <li class="nav-item active">
         <a class="nav-link" href="#" th:href="@{/index/menu}">Menu</a>
       </li>
       <li class="nav-item active">
@@ -35,35 +31,44 @@
     </ul>
   </div>
 </nav>
-
-<form th:action="@{/menucre}" th:object="${menus}" method="POST">
+<form th:action="@{/clientecre}" th:object="${clientes}" method="POST">
   <div class="modal-header">
-    <h4 class="modal-title">Actualizar Menu</h4>
+    <h4 class="modal-title">Añadir Cliente</h4>
     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
   </div>
   <div class="modal-body">
     <div class="form-group">
-
-      <label>Codigo</label>
-      <div th:if="${error != null && error.containsKey('codigoMenu')}" th:text="${error.codigoMenu}"></div>
-      <input type="text" name="codigo"  th:field="*{codigoMenu}" class="form-control" >
-
+      <label>Cédula</label>
+      <div th:if="${error != null && error.containsKey('cedula')}" th:text="${error.cedula}"></div>
+      <input type="text" name="cedula"  th:field="*{cedula}" class="form-control" required>
     </div>
     <div class="form-group">
-      <label>Descripción</label>
-      <div th:if="${error != null && error.containsKey('descripcion')}" th:text="${error.descripcion}"></div>
-      <input type="text" name="descripcion"  th:field="*{descripcion}" class="form-control" >
+      <label>Nombre</label>
+      <div th:if="${error != null && error.containsKey('nombre')}" th:text="${error.nombre}"></div>
+      <input type="text" name="nombre"  th:field="*{nombre}"class="form-control" required>
     </div>
     <div class="form-group">
-      <label>Costo</label>
-      <input type="number" name="costo"  th:field="*{costo}" class="form-control">
+      <label>Apellido</label>
+      <div th:if="${error != null && error.containsKey('apellido')}" th:text="${error.apellido}"></div>
+      <input type="text" name="apellido"  th:field="*{apellido}" class="form-control" required>
+    </div>
+    <div class="form-group">
+      <label>Celular</label>
+      <div th:if="${error != null && error.containsKey('celular')}" th:text="${error.celular}"></div>
+      <input type="text" name="celular"  th:field="*{celular}"class="form-control" required>
+    </div>
+    <div class="form-group">
+      <label>Dirección</label>
+      <div th:if="${error != null && error.containsKey('direccion')}" th:text="${error.direccion}"></div>
+      <input type="text" name="direccion"  th:field="*{direccion}" class="form-control" required>
     </div>
   </div>
   <div class="modal-footer">
-    <input type="button" class="btn btn-danger" th:href="@{/index/menu}"  value="Cancelar">
-    <input type="submit" class="btn btn-success" value="Actualizar">
+    <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancelar">
+    <input type="submit" class="btn btn-success" value="Añadir">
   </div>
 </form>
+
 
 
 

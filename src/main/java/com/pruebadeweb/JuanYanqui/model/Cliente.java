@@ -19,19 +19,19 @@ public class Cliente implements Serializable {
     @Column(name="idCliente")
     private Long idCliente;
 
-
+    @NotEmpty
     @Column(name="cedula")
     private String cedula;
-
+    @NotEmpty
     @Column(name="nombre")
     private String nombre;
-
+    @NotEmpty
     @Column(name="apellido")
     private String apellido;
-
+    @NotEmpty
     @Column(name="celular")
     private String celular;
-
+    @NotEmpty
     @Column(name="direccion")
     private String direccion;
 
