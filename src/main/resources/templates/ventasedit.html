@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Página de inicio</title>
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <link rel="stylesheet" type="text/css" th:href="@{/css/estilos.css}">
+</head>
+<body>
+
+<!-- Barra de navegación -->
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" href="#"  th:href="@{/index}">Mi sitio web</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav">
+      <li class="nav-item active">
+        <a class="nav-link" href="#" th:href="@{/index/cliente}" >Clientes</a>
+      </li>
+      <li class="nav-item active">
+        <a class="nav-link" href="#" th:href="@{/index/ver/string/{texto}}" >ver</a>
+      </li>
+      <li class="nav-item active">
+        <a class="nav-link" href="#" th:href="@{/index/menu}">Menu</a>
+      </li>
+      <li class="nav-item active">
+        <a class="nav-link" href="#" th:href="@{/index/ventas}">Ventas</a>
+      </li>
+    </ul>
+  </div>
+</nav>
+<!--<li>-->
+<!--  <a th:href="@{/index/ver/string(texto='Que tal juan')}" >rutaclick</a>-->
+<!--</li>-->
+<form th:action="@{/ventas}" th:object="${venta}" method="POST" class="row g-3 needs-validation" ngNativeValidate >
+
+  <div class="col-md-12 position-relative" hidden="true">
+    <input type="text" class="form-control" name="idVenta" th:field="*{idVenta}">
+  </div>
+
+  <div class="col-md-12 position-relative">
+    <label  class="form-label">Código cliente: </label>
+    <input type="text" class="form-control"  th:field="*{cliente.idCliente}" id="idCliente" name="idCliente"
+           placeholder="Código cliente" required>
+  </div>
+
+  <div class="col-md-12 position-relative">
+    <label  class="form-label">Código menú: </label>
+    <input type="text" class="form-control" th:field="*{menu.idMenu}" id="idMenu" name="idMenu"
+           placeholder="Código menú" required>
+  </div>
+
+
+  <div class="col-md-12 position-relative">
+    <label class="form-label">Cantidad de venta: </label>
+    <input type="number" class="form-control" th:field="*{cantidad}" id="cantidad" name="cantidad"
+           placeholder="Ingrese la cantidad" required oninput="calcularTotal()">
+  </div>
+
+  <div class="col-md-12 position-relative">
+    <label class="form-label">Costo menú: </label>
+    <input type="number" class="form-control" th:field="*{costo_menu}" id="costo" name="costo"
+           placeholder="Costo" required step="0.01" onchange="calcularTotal()">
+  </div>
+
+  <div class="col-md-12 position-relative">
+    <label class="form-label">Total venta: </label>
+    <input type="number" class="form-control" th:field="*{total}" id="total" name="total"
+           placeholder="Total" required>
+  </div>
+
+
+  <div class="btns" style="width:100%; height:100%">
+
+    <input type="button" class="btn btn-danger" th:href="@{/index/ventas}"  value="Cancelar">
+    <input type="submit" class="btn btn-success" value="Actualizar">
+    <!-- <button class="btn btn-warning fw-bold float-end" role="button">Crear</button> -->
+  </div>
+</form>
+
+
+
+</body>
+</html>

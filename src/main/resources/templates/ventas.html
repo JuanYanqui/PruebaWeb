@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Página de inicio</title>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/estilos.css}">
+    <style>
+        .cursor-pointer{
+            cursor: pointer !important;
+        }
+    </style>
+    <script>
+        $(document).ready(function(){
+            // Activate tooltip
+            $('[data-toggle="tooltip"]').tooltip();
+
+            // Select/Deselect checkboxes
+            var checkbox = $('table tbody input[type="checkbox"]');
+            $("#selectAll").click(function(){
+                if(this.checked){
+                    checkbox.each(function(){
+                        this.checked = true;
+                    });
+                } else{
+                    checkbox.each(function(){
+                        this.checked = false;
+                    });
+                }
+            });
+            checkbox.click(function(){
+                if(!this.checked){
+                    $("#selectAll").prop("checked", false);
+                }
+            });
+        });
+    </script>
+
+</head>
+
+<body>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
+
+
+<!--<nav class="navbar navbar-expand-lg bg-light">-->
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand"  href="#" th:href="@{/index}">Mi sitio web</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+            <li class="nav-item active">
+                <a class="nav-link" href="#" th:href="@{/index/cliente}" >Clientes</a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="#" th:href="@{/index/menu}">Menu</a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="#" th:href="@{/index/ventas}">Ventas</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="container py-5">
+
+                <div class="rounded shadow p-3 d-flex">
+
+
+                    <div class="">
+                        <h3 class="text-primary">Ventas</h3>
+
+                        <hr>
+
+                    </div>
+                </div>
+
+                <div class="row mt-3"> <!--Vamos a actualizar row-->
+                    <div class="col-md-6">
+
+                        <div class="clientes" style="height: 300px; overflow: auto;">
+                            <h3>Mis clientes</h3>
+                            <input id="searchcliente" class="form-control me-2" type="search" placeholder="Search" aria-label="Search"  >
+                            <div class="my-2"></div>
+                            <div th:each="clientes: ${listcliente}" class="card mb-3">
+                                <div class="card-body">
+                                    <div class="d-flex justify-content-between">
+                                        <div th:text="${clientes.nombre + ' ' + clientes.apellido}" class="fw-bold"></div>
+                                        <div class="">
+                                            <a class="btn btn-success" title="Edit task" th:attr="data-id=${clientes.idCliente}" onclick="addClient(this)"></a>
+                                        </div>
+                                    </div>
+
+                                    <div class="">
+
+                                        <small class="text-success" *ngIf="data.estado; else noCompleted">
+                                            <i class="fa fa-check-circle"></i><a th:text="${clientes.cedula}"></a>
+                                        </small>
+
+                                        <ng-template #noCompleted>
+                                            <small class="text-muted">
+                                            </small>
+                                        </ng-template>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="menus mt-3" style="height: 300px; overflow: auto;">
+                            <h3>Mis Menus</h3>
+                            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" id="searchMenu">
+                            <div class="my-2"></div>
+                            <div th:each="menus: ${listmenu}" class="card mb-3">
+                                <div class="card-body">
+                                    <div class="d-flex justify-content-between">
+                                        <div th:text="${menus.descripcion}" class="fw-bold"></div>
+                                        <div class="">
+                                            <a class="btn btn-success" title="Edit task" th:attr="data-id-costo=${menus.idMenu+ ','+ menus.costo}" onclick="addMenu(this)"></a>
+                                        </div>
+                                    </div>
+
+                                    <div class="">
+
+                                        <small class="text-success" *ngIf="data.estado; else noCompleted">
+                                            <i class="fa fa-check-circle"></i><a th:text="${menus.codigoMenu}"></a>
+                                        </small>
+
+                                        <ng-template #noCompleted>
+                                            <small class="text-muted">
+                                                <i class="fa fa-clock"></i>$ <a th:text="${menus.costo}"></a>
+                                            </small>
+                                        </ng-template>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div> <!--Fin del primer div-->
+
+                    <div class="col-md-6">
+                        <div class="mx-4 ml-4">
+                            <div class="row">
+                                <div class="col">
+                                    <div class="shadow-lg p-3 mb-5 mt-4 bg-body rounded">
+                                        <div class="p-3 mb-2 bg-primary bg-dark fw-bold text-white d-flex justify-content-between">
+                                            <div>Registro de Venta</div>
+                                            <button type="button" class="btn-close ms-auto  bg-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+
+                                        <form th:action="@{/ventas}" th:object="${venta}" method="POST" class="row g-3 needs-validation" ngNativeValidate >
+
+                                            <div class="col-md-12 position-relative" hidden="true">
+
+                                                <input type="text" class="form-control" name="idVenta" th:field="*{idVenta}">
+                                            </div>
+
+                                            <div class="col-md-12 position-relative">
+                                                <label  class="form-label">Código cliente: </label>
+                                                <input type="text" class="form-control"  th:field="*{cliente.idCliente}" id="idCliente" name="idCliente"
+                                                       placeholder="Código cliente" required>
+                                            </div>
+
+                                            <div class="col-md-12 position-relative">
+                                                <label  class="form-label">Código menú: </label>
+                                                <input type="text" class="form-control" th:field="*{menu.idMenu}" id="idMenu" name="idMenu"
+                                                       placeholder="Código menú" required>
+                                            </div>
+
+
+                                            <div class="col-md-12 position-relative">
+                                                <label class="form-label">Cantidad de venta: </label>
+                                                <input type="number" class="form-control" th:field="*{cantidad}" id="cantidad" name="cantidad"
+                                                       placeholder="Ingrese la cantidad" required oninput="calcularTotal()">
+                                            </div>
+
+                                            <div class="col-md-12 position-relative">
+                                                <label class="form-label">Costo menú: </label>
+                                                <input type="number" class="form-control" th:field="*{costo_menu}" id="costo" name="costo"
+                                                       placeholder="Costo" required step="0.01" onchange="calcularTotal()">
+                                            </div>
+
+                                            <div class="col-md-12 position-relative">
+                                                <label class="form-label">Total venta: </label>
+                                                <input type="number" class="form-control" th:field="*{total}" id="total" name="total"
+                                                       placeholder="Total" required>
+                                            </div>
+
+
+                                            <div class="btns" style="width:100%; height:100%">
+
+                                                <button class="btn btn-warning fw-bold" role="button">Guardar</button>
+
+                                                <button class="btn btn-primary fw-bold" data-bs-dismiss="modal" aria-label="Close">Cancelar</button>
+
+                                                <!-- <button class="btn btn-warning fw-bold float-end" role="button">Crear</button> -->
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+
+    </div>
+</div>
+
+<script>
+    if (window.location.href.includes('/app/index/ventas/')) {
+        const modal = document.querySelector('#exampleModal');
+        if (modal) {
+            const modalInstance = new bootstrap.Modal(modal);
+            modalInstance.show();
+        }
+    }
+
+    function addClient(element) {
+        var idCliente = element.getAttribute("data-id");
+        document.querySelector("#idCliente").value = idCliente;
+    }
+
+    function addMenu(element) {
+        var data  = element.getAttribute("data-id-costo").split(",");
+        var idMenu = data[0];
+        var costo = parseInt(data[1]);
+        document.querySelector("#idMenu").value = idMenu;
+        document.querySelector("#costo").value = costo;
+    }
+
+    function calcularTotal() {
+        var cantidad = document.getElementById("cantidad").value;
+        var costo = document.getElementById("costo").value;
+        var total = cantidad * costo;
+        document.getElementById("total").value = total;
+    }
+
+    //Para realizar las busquedas
+    // Capturar el input de búsqueda
+    const searchInput = document.getElementById("searchcliente");
+
+    // Agregar un listener para detectar cambios en el input de búsqueda
+    searchInput.addEventListener("input", function () {
+        // Capturar el valor del input de búsqueda
+        const searchTerm = searchInput.value.toLowerCase();
+
+        // Iterar sobre cada elemento que se desea buscar
+        const clients = document.getElementsByClassName("card mb-3");
+        for (let i = 0; i < clients.length; i++) {
+            const client = clients[i];
+
+            // Capturar el texto a buscar dentro del elemento
+            const searchText = client.innerText.toLowerCase();
+
+            // Ocultar o mostrar el elemento dependiendo si cumple con el criterio de búsqueda
+            if (searchText.includes(searchTerm)) {
+                client.style.display = "block";
+            } else {
+                client.style.display = "none";
+            }
+        }
+    });
+
+    // Capturar el input de búsqueda de menú
+    const searchMenu = document.getElementById("searchMenu");
+
+    // Agregar un listener para detectar cambios en el input de búsqueda de menú
+    searchMenu.addEventListener("input", function () {
+        // Capturar el valor del input de búsqueda
+        const searchTerm = searchMenu.value.toLowerCase();
+
+        // Iterar sobre cada elemento de menú que se desea buscar
+        const menus = document.getElementsByClassName("card mb-4");
+        for (let i = 0; i < menus.length; i++) {
+            const menu = menus[i];
+
+            // Capturar el texto a buscar dentro del elemento de menú
+            const searchText = menu.innerText.toLowerCase();
+
+            // Ocultar o mostrar el elemento de menú dependiendo si cumple con el criterio de búsqueda
+            if (searchText.includes(searchTerm)) {
+                menu.style.display = "block";
+            } else {
+                menu.style.display = "none";
+            }
+        }
+    });
+</script>
+<div class="container-xl">
+    <div class="table-responsive">
+        <div class="table-wrapper">
+            <div class="table-title">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <h2> <b>Ventas</b></h2>
+                    </div>
+                    <div class="col-sm-6">
+                        <a href="#addEmployeeModal" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="material-icons">&#xE147;</i> <span>Añadir Ventas</span></a>
+                    </div>
+                </div>
+            </div>
+            <table class="table table-striped table-hover">
+                <thead>
+                <tr>
+                    <th>ID Menu</th>
+                    <th>Nombre Cliente</th>
+                    <th>Menu</th>
+                    <th>Fecha de venta</th>
+                    <th>Cantidad de ventas</th>
+                    <th>Costo del menu</th>
+                    <th>Total de venta</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="ventas: ${listventas}">
+                    <th th:text="${ventas.idVenta}" scope="row"></th>
+                    <td th:text="${ventas.cliente.nombre}"></td>
+                    <td th:text="${ventas.menu.descripcion}"></td>
+                    <td th:text="${ventas.fecha}"></td>
+                    <td th:text="${ventas.cantidad}"></td>
+                    <td th:text="${ventas.costo_menu}"></td>
+                    <td th:text="${ventas.total}"></td>
+                    <td>
+                    <form th:action="@{/index/ventas/{id}(id=${ventas.idVenta})}">
+                        <button class="material-icons">&#xE254;</button>
+                    </form>
+                    <a href="#deleteEmployeeModal" class="delete" data-toggle="modal">
+                        <a th:href="@{/venta/eliminar/{idVenta}(idVenta=${ventas.idVenta})}" class="material-icons" data-toggle="tooltip"title="Delete">&#xE872;</a>
+                    </a>
+                    <td>
+                </tr>
+                </tbody>
+            </table>
+            <div class="clearfix">
+                <div class="hint-text">Showing <b>5</b> out of <b>25</b> entries</div>
+                <ul class="pagination">
+                    <li class="page-item disabled"><a href="#">Previous</a></li>
+                    <li class="page-item"><a href="#" class="page-link">1</a></li>
+                    <li class="page-item"><a href="#" class="page-link">2</a></li>
+                    <li class="page-item active"><a href="#" class="page-link">3</a></li>
+                    <li class="page-item"><a href="#" class="page-link">4</a></li>
+                    <li class="page-item"><a href="#" class="page-link">5</a></li>
+                    <li class="page-item"><a href="#" class="page-link">Next</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- Fin de la Implemtentacion de la parte de  la lista de los usuarios-->
+
+
+
+</body>
+</html>
