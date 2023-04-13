@@ -14,12 +14,14 @@ import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.support.SessionStatus;
 
 import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
 
 @Controller
+@SessionAttributes("cliente")
 public class Controllerhome {
     @Autowired
     ClienteService clienteService;
@@ -61,6 +63,8 @@ public class Controllerhome {
     public String git(Model model){
         return "redirect:https://github.com/JuanYanqui";
     }
+
+
 
 //    @GetMapping("/")
 //    public String pa(){
@@ -113,7 +117,7 @@ public class Controllerhome {
 //    }
 
     @PostMapping("/clientecre")
-    public String updateClient(@ModelAttribute("cliente") Cliente cliente) {
+    public String updateClient(@ModelAttribute("clientes") Cliente cliente) {
         if(cliente.getIdCliente() == null){
             clienteService.save(cliente);
         }else {
@@ -149,8 +153,16 @@ public class Controllerhome {
         }
         return "redirect:/index/menu";
     }
-    @GetMapping("/index/validacliente")
-    public String validacliente( @Validated Cliente cliente, BindingResult result, Model model){
+
+    @GetMapping("/index/valida")
+    public String validacli( ModelMap model){
+        Cliente cliente = new Cliente();
+
+        model.addAttribute("clientes", cliente);
+        return "clientevalida";
+    }
+    @PostMapping("/index/validacliente")
+    public String validacliente(@Validated Cliente cliente, BindingResult result, Model model, SessionStatus status){
         model.addAttribute("clientes", cliente);
         model.addAttribute("title", "Result form");
         if(result.hasErrors()){
@@ -162,10 +174,20 @@ public class Controllerhome {
             model.addAttribute("error", e);
             return "clientevalida";
         }
+        status.setComplete();
         return "/index/cliente";
     }
 
-    @GetMapping("/index/validamenu")
+
+    @GetMapping("/index/validam")
+    public String validamenu( ModelMap model){
+        Menu menu = new Menu();
+
+        model.addAttribute("menus", menu);
+        return "menuvalida";
+    }
+
+    @PostMapping("/index/validamenu")
     public String validacliente( @Validated Menu menu, BindingResult result, Model model){
         model.addAttribute("menus", menu);
         model.addAttribute("title", "Result form");
@@ -313,5 +335,34 @@ public class Controllerhome {
     }
 
 
+    @GetMapping({"/index/sesion"})
+    public String sesion(Model model){
+
+        return "sesion";
+    }
+
+
+//    @GetMapping("/index/sesion")
+//    public String form(Model model) {
+//        Usuario usuario= new Usuario();
+//        usuario.setNombre ("juan");
+//        usuario.setApellido("yanqui");
+//        usuario. setIdentificador("12.356.242.3");
+//        model. addAttribute ("titulo", "Registrar Usuario");
+//        model.addAttribute("usuario",usuario);
+//
+//        return "/index/sesion";
+//    }
+
+//    @PostMapping("/index/sesion")
+//    public String procesar(@Valid Usuario usuario, BindingResult result, Model model, SessionStatus status) {
+//        model.addAttribute("titulo", "Resultado form");
+//        if (result.hasErrors()) {
+//            return "form";
+//        }
+//        model.addAttribute("usuario", usuario);
+//        status.setComplete();
+//        return"resultado";
+//    }
 
 }

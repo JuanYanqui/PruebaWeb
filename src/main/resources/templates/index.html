@@ -20,6 +20,9 @@
   <div class="collapse navbar-collapse" id="navbarNav">
     <ul class="navbar-nav">
       <li class="nav-item active">
+        <a class="nav-link" href="#" th:href="@{/index/sesion}">Sesion</a>
+      </li>
+      <li class="nav-item active">
         <a class="nav-link" href="#" th:href="@{/index/cliente}" >Clientes</a>
       </li>
       <li class="nav-item active">
@@ -34,13 +37,9 @@
 <h4 class="text-white link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">Links de Datos</h4>
 <div class="row">
 
-    <li>
-      <ul class="submenu">
-        <li><a  class="text-white link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover" th:href="@{/index/datos}">Datos Personales</a></li>
-        <li><a class="text-white link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover" th:href="@{/index/ver/string/{texto}}">Ver Mensaje</a></li>
-        <li><a class="text-white link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover" th:href="@{/index/git}">Mi GitHub</a></li>
-      </ul>
-    </li>
+  <li><a  class="text-white link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover" th:href="@{/index/datos}">Datos Personales</a></li>
+  <li><a class="text-white link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover" th:href="@{/index/ver/string/{texto}}">Ver Mensaje</a></li>
+  <li><a class="text-white link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover" th:href="@{/index/git}">Mi GitHub</a></li>
 </div>
 
 
