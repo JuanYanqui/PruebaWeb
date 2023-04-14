@@ -34,7 +34,6 @@ public class Menu implements Serializable {
     @Column(name="descripcion")
     private String descripcion;
     @Requerido
-    @Pattern(regexp = "^[0-9]+$", message = "El campo debe contener solo números")
     @Column(name="costo")
     private Double costo;
 
